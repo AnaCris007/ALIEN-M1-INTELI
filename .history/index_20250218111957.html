@@ -117,34 +117,27 @@
             //Movimento para esquerda [<--]
             if (variaveisJogo[1].valor.left.isDown) { // Se a seta da esquerda for pressionada...
                 variaveisJogo[0].valor.setVelocityX(-150);
-            
-            //Movimento para direita [-->]
+            //
             } else if (variaveisJogo[1].valor.right.isDown) {
                 variaveisJogo[0].valor.setVelocityX(150);
-            //Sem movimento horizontal [ x = 0 ]
             } else {
-                variaveisJogo[0].valor.setVelocityX(0); // Define a velocidade do alien como 0, ou seja, ele vai cair verticamelmente, pois só a gravidade vai atuar sobre ele.
+                variaveisJogo[0].valor.setVelocityX(0);
             }
 
-            //Movimento para cima [^]
             if (variaveisJogo[1].valor.up.isDown) {
                 variaveisJogo[0].valor.setVelocityY(-150);
-                ativarTurbo(); // Ativa o turbo, o "foguinho" aparece na tela
-
-            } else { //Se a seta para cima não estiver pressionada...
-                semTurbo(); // Desativa o turbo, o "foguinho" desaparece da tela
+                ativarTurbo();
+            } else {
+                semTurbo();
             }
 
-            // Determina a posição do turbo em relação ao alien, no caso, o turbo vai ficar na parte de baixo da nave
             variaveisJogo[2].valor.setPosition(variaveisJogo[0].valor.x, variaveisJogo[0].valor.y + variaveisJogo[0].valor.height/2);
         }
 
-        // Função que ativa o turbo, faz o "foguinho" aparecer na tela
         function ativarTurbo() {
             variaveisJogo[2].valor.setVisible(true);
         }
 
-        // Função que desativa o turbo, faz o "foguinho" desaparecer da tela
         function semTurbo() {
             variaveisJogo[2].valor.setVisible(false);
         }

@@ -129,22 +129,19 @@
             //Movimento para cima [^]
             if (variaveisJogo[1].valor.up.isDown) {
                 variaveisJogo[0].valor.setVelocityY(-150);
-                ativarTurbo(); // Ativa o turbo, o "foguinho" aparece na tela
+                ativarTurbo(); // Ativa o turbo, o ""
 
-            } else { //Se a seta para cima não estiver pressionada...
-                semTurbo(); // Desativa o turbo, o "foguinho" desaparece da tela
+            } else {
+                semTurbo(); // Desativa o turbo
             }
 
-            // Determina a posição do turbo em relação ao alien, no caso, o turbo vai ficar na parte de baixo da nave
             variaveisJogo[2].valor.setPosition(variaveisJogo[0].valor.x, variaveisJogo[0].valor.y + variaveisJogo[0].valor.height/2);
         }
 
-        // Função que ativa o turbo, faz o "foguinho" aparecer na tela
         function ativarTurbo() {
             variaveisJogo[2].valor.setVisible(true);
         }
 
-        // Função que desativa o turbo, faz o "foguinho" desaparecer da tela
         function semTurbo() {
             variaveisJogo[2].valor.setVisible(false);
         }

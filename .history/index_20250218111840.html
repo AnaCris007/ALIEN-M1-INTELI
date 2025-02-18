@@ -109,42 +109,32 @@
             this.physics.add.collider([variaveisJogo[0].valor, variaveisJogo[4].valor], variaveisJogo[7].valor);
             variaveisJogo[7].valor.setScale(0.3); // Redimensiona o prédio para 30% do tamanho original
             variaveisJogo[7].valor.setBodySize(variaveisJogo[7].valor.width * 0.3, variaveisJogo[7].valor.height * 0.3); // Redimensiona o hitbox do prédio para 30% do tamanho original, pra ficar igual ao tamanho da imagem
-            variaveisJogo[7].valor.setOffset(245, 225); // Reposiciona o hitbox do prédio para ficar no lugar certo
+            variaveisJogo[7].valor.setOffset(245, 225); // REposiciona o hitbox do prédio para ficar no lugar certo
         }
 
-        // Função que atualiza o jogo
-        function update() { 
-            //Movimento para esquerda [<--]
-            if (variaveisJogo[1].valor.left.isDown) { // Se a seta da esquerda for pressionada...
+        function update() {
+            if (variaveisJogo[1].valor.left.isDown) {
                 variaveisJogo[0].valor.setVelocityX(-150);
-            
-            //Movimento para direita [-->]
             } else if (variaveisJogo[1].valor.right.isDown) {
                 variaveisJogo[0].valor.setVelocityX(150);
-            //Sem movimento horizontal [ x = 0 ]
             } else {
-                variaveisJogo[0].valor.setVelocityX(0); // Define a velocidade do alien como 0, ou seja, ele vai cair verticamelmente, pois só a gravidade vai atuar sobre ele.
+                variaveisJogo[0].valor.setVelocityX(0);
             }
 
-            //Movimento para cima [^]
             if (variaveisJogo[1].valor.up.isDown) {
                 variaveisJogo[0].valor.setVelocityY(-150);
-                ativarTurbo(); // Ativa o turbo, o "foguinho" aparece na tela
-
-            } else { //Se a seta para cima não estiver pressionada...
-                semTurbo(); // Desativa o turbo, o "foguinho" desaparece da tela
+                ativarTurbo();
+            } else {
+                semTurbo();
             }
 
-            // Determina a posição do turbo em relação ao alien, no caso, o turbo vai ficar na parte de baixo da nave
             variaveisJogo[2].valor.setPosition(variaveisJogo[0].valor.x, variaveisJogo[0].valor.y + variaveisJogo[0].valor.height/2);
         }
 
-        // Função que ativa o turbo, faz o "foguinho" aparecer na tela
         function ativarTurbo() {
             variaveisJogo[2].valor.setVisible(true);
         }
 
-        // Função que desativa o turbo, faz o "foguinho" desaparecer da tela
         function semTurbo() {
             variaveisJogo[2].valor.setVisible(false);
         }

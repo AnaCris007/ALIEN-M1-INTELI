@@ -59,7 +59,7 @@
             this.load.image('moeda', 'assets/moeda.png'); // Carrega a imagem da moeda
             this.load.image('predio', 'assets/predio.png'); // Carrega a imagem do prédio
         }
-
+,
         // Função que adiciona os elementos do jogo na tela
         function create() {
             // Adiciona a imagem de fundo
@@ -74,81 +74,66 @@
             variaveisJogo[0].valor.setCollideWorldBounds(true); // Faz com que o alien não saia da tela, pois ele irá colidir com as bordas da tela
 
             // Inicializa as teclas de movimento
-            variaveisJogo[1].valor = this.input.keyboard.createCursorKeys(); // Cria as setas do teclado
+            variaveisJogo[1].valor = this.input.keyboard.createCursorKeys();
 
             // Inicializa a plataforma
-            variaveisJogo[3].valor = this.physics.add.staticImage(larguraJogo/2, alturaJogo/2, 'plataforma_tijolo'); // Adiciona a plataforma como uma imagem estática
-            // Adiciona a colisão entre o alien e a plataforma, o alien não vai conseguir atravessar a plataforma agora
-            this.physics.add.collider(variaveisJogo[0].valor, variaveisJogo[3].valor); 
+            variaveisJogo[3].valor = this.physics.add.staticImage(larguraJogo/2, alturaJogo/2, 'plataforma_tijolo');
+            this.physics.add.collider(variaveisJogo[0].valor, variaveisJogo[3].valor);
 
             // Inicializa a moeda
             variaveisJogo[4].valor = this.physics.add.sprite(larguraJogo/2, 0, 'moeda');
-            variaveisJogo[4].valor.setCollideWorldBounds(true); // Faz com que a moeda não saia da tela, pois ela irá colidir com as bordas da tela
-            variaveisJogo[4].valor.setBounce(0.7); // Faz com que a moeda quique(Bounce) ao colidir com algo
-            // Adiciona a colisão entre a moeda e a plataform, a moeda não vai atravessar a plataforma agora
+            variaveisJogo[4].valor.setCollideWorldBounds(true);
+            variaveisJogo[4].valor.setBounce(0.7);
             this.physics.add.collider(variaveisJogo[4].valor, variaveisJogo[3].valor);
 
-            // Inicializa o placar e define que o texto deve ser Moedas: mais a pomtuacao atual do jogo
+            // Inicializa o placar
             variaveisJogo[6].valor = this.add.text(50, 150, 'Moedas:' + variaveisJogo[5].valor, { fontSize: '45px', fill:'#495613' });
 
-            //Quando o alien encostar na moeda...
-            this.physics.add.overlap(variaveisJogo[0].valor, variaveisJogo[4].valor, function(){ //Quando o alien e a moeda se sobreporem...
-                variaveisJogo[4].valor.setVisible(false); // A moeda fica invisível
-                // Define uma nova posiçõ Y aleatória para a moeda
+            this.physics.add.overlap(variaveisJogo[0].valor, variaveisJogo[4].valor, function(){
+                variaveisJogo[4].valor.setVisible(false);
+
                 var posicaoMoeda_Y = Phaser.Math.RND.between(50, 650);
-                variaveisJogo[4].valor.setPosition(posicaoMoeda_Y, 100); // Define a nova posição da moeda
-                variaveisJogo[5].valor += 1; // Adiciona 1 a pontuação
-                variaveisJogo[6].valor.setText('Moedas:' + variaveisJogo[5].valor); // Atualiza o texto do placar
-                console.log(variaveisJogo[5].valor); // Exibe a pontuação no console para verificar se a pontuação está realmente aumentando
-                variaveisJogo[4].valor.setVisible(true); // A moeda fica visível de novo
+                variaveisJogo[4].valor.setPosition(posicaoMoeda_Y, 100);
+                variaveisJogo[5].valor += 1;
+                variaveisJogo[6].valor.setText('Moedas:' + variaveisJogo[5].valor);
+                console.log(variaveisJogo[5].valor);
+                variaveisJogo[4].valor.setVisible(true);
             });
 
             // Inicializa o prédio
-            variaveisJogo[7].valor = this.physics.add.staticImage(150, 664, 'predio'); // Adiciona o prédio como uma imagem estática
-            // Adiciona a colisão entre o alien, a moeda e o prédio, o alien e a moeda não vão conseguir atravessar o prédio agora
+            variaveisJogo[7].valor = this.physics.add.staticImage(150, 664, 'predio');
             this.physics.add.collider([variaveisJogo[0].valor, variaveisJogo[4].valor], variaveisJogo[7].valor);
-            variaveisJogo[7].valor.setScale(0.3); // Redimensiona o prédio para 30% do tamanho original
-            variaveisJogo[7].valor.setBodySize(variaveisJogo[7].valor.width * 0.3, variaveisJogo[7].valor.height * 0.3); // Redimensiona o hitbox do prédio para 30% do tamanho original, pra ficar igual ao tamanho da imagem
-            variaveisJogo[7].valor.setOffset(245, 225); // Reposiciona o hitbox do prédio para ficar no lugar certo
+            variaveisJogo[7].valor.setScale(0.3);
+            variaveisJogo[7].valor.setBodySize(variaveisJogo[7].valor.width * 0.3, variaveisJogo[7].valor.height * 0.3);
+            variaveisJogo[7].valor.setOffset(245, 225);
         }
 
-        // Função que atualiza o jogo
-        function update() { 
-            //Movimento para esquerda [<--]
-            if (variaveisJogo[1].valor.left.isDown) { // Se a seta da esquerda for pressionada...
+        function update() {
+            if (variaveisJogo[1].valor.left.isDown) {
                 variaveisJogo[0].valor.setVelocityX(-150);
-            
-            //Movimento para direita [-->]
             } else if (variaveisJogo[1].valor.right.isDown) {
                 variaveisJogo[0].valor.setVelocityX(150);
-            //Sem movimento horizontal [ x = 0 ]
             } else {
-                variaveisJogo[0].valor.setVelocityX(0); // Define a velocidade do alien como 0, ou seja, ele vai cair verticamelmente, pois só a gravidade vai atuar sobre ele.
+                variaveisJogo[0].valor.setVelocityX(0);
             }
 
-            //Movimento para cima [^]
             if (variaveisJogo[1].valor.up.isDown) {
                 variaveisJogo[0].valor.setVelocityY(-150);
-                ativarTurbo(); // Ativa o turbo, o "foguinho" aparece na tela
-
-            } else { //Se a seta para cima não estiver pressionada...
-                semTurbo(); // Desativa o turbo, o "foguinho" desaparece da tela
+                ativarTurbo();
+            } else {
+                semTurbo();
             }
 
-            // Determina a posição do turbo em relação ao alien, no caso, o turbo vai ficar na parte de baixo da nave
             variaveisJogo[2].valor.setPosition(variaveisJogo[0].valor.x, variaveisJogo[0].valor.y + variaveisJogo[0].valor.height/2);
         }
 
-        // Função que ativa o turbo, faz o "foguinho" aparecer na tela
         function ativarTurbo() {
             variaveisJogo[2].valor.setVisible(true);
         }
 
-        // Função que desativa o turbo, faz o "foguinho" desaparecer da tela
         function semTurbo() {
             variaveisJogo[2].valor.setVisible(false);
         }
     </script>
 </body>
 </html>
-
